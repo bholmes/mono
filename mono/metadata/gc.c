@@ -897,8 +897,15 @@ mono_gchandle_free (guint32 gchandle)
 	if (type > 3)
 		return;
 #ifndef HAVE_SGEN_GC
-	if (type == HANDLE_WEAK_TRACK)
-		mono_gc_remove_weak_track_handle (gchandle);
+	if (type == HANDLE_WEAK_TRACK) {
+		MonoDomain* domain = mono_domain_get ();
+		lock_handles (handles);
+		if (slot < handles->size && (handles->bitmap [slot / 32] & (1 << (slot % 32)))) {
+			domain = mono_domain_get_by_id (handles->domain_ids [slot]);
+		}
+		unlock_handles (handles);
+		mono_gc_remove_weak_track_handle (domain, gchandle);
+	}
 #endif
 
 	lock_handles (handles);

@@ -128,7 +128,7 @@ MonoObject *mono_gc_weak_link_get    (void **link_addr) MONO_INTERNAL;
 #ifndef HAVE_SGEN_GC
 void    mono_gc_add_weak_track_handle    (MonoObject *obj, guint32 gchandle) MONO_INTERNAL;
 void    mono_gc_change_weak_track_handle (MonoObject *old_obj, MonoObject *obj, guint32 gchandle) MONO_INTERNAL;
-void    mono_gc_remove_weak_track_handle (guint32 gchandle) MONO_INTERNAL;
+void    mono_gc_remove_weak_track_handle (MonoDomain *domain, guint32 gchandle) MONO_INTERNAL;
 GSList* mono_gc_remove_weak_track_object (MonoDomain *domain, MonoObject *obj) MONO_INTERNAL;
 #endif
 

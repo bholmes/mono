@@ -616,9 +616,8 @@ mono_gc_change_weak_track_handle (MonoObject *old_obj, MonoObject *obj, guint32 
 }
 
 void
-mono_gc_remove_weak_track_handle (guint32 gchandle)
+mono_gc_remove_weak_track_handle (MonoDomain *domain, guint32 gchandle)
 {
-	MonoDomain *domain = mono_domain_get ();
 	MonoObject *obj;
 
 	/* Clean our entries in the two hashes in MonoDomain */
